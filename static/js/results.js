@@ -15,15 +15,12 @@ const RESULTS = {
   long: [
     ["long/cellphone", "333 frames around the phone and back"],
   ],
-  anchor: [
-    ["anchor/camera", "Push in on either camera, or pull back from the armchair"],
-    ["anchor/gaming", "Orbit the gaming chair, or push in toward the PC tower"],
-    ["anchor/candle", "Orbit the armchair, or rise above the side table"],
-    ["anchor/pinkb", "Orbit left around the telephone, or right around the perfume bottle"],
-  ],
   switch: [
     ["switch/cars", "When the silver car leaves the view, we switch to the red car and keep controlling the camera"],
     ["switch/chair-car", "When the chair leaves the view, we switch to the sports car and keep controlling the camera"],
+    ["anchor/gaming", "Orbit the gaming chair, or push in toward the PC tower"],
+    ["anchor/candle", "Orbit the armchair, or rise above the side table"],
+    ["anchor/pinkb", "Orbit left around the telephone, or right around the perfume bottle"],
     ["switch/desk-chair", "We switch from the desk to the chair and keep controlling the camera, now orbiting the other way"],
   ],
   demo: [
@@ -78,7 +75,7 @@ if ("IntersectionObserver" in window) {
 // Method figures: show the still by default, play the matching animation on hover (tap on touch screens).
 document.querySelectorAll(".hover-fig").forEach(box => {
   const v = document.createElement("video");
-  v.muted = true; v.playsInline = true; v.loop = true; v.preload = "none";
+  v.muted = true; v.playsInline = true; v.loop = false; v.preload = "none";   // builds play once and hold the last frame
   v.setAttribute("muted", ""); v.setAttribute("playsinline", "");
   box.appendChild(v);
   const show = () => {
