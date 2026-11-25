@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="AnyCam represents the camera with the rendering of any object in the scene, a camera condition that is scale-aware, view-complete and object-relative, which enables object-centric camera control.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AnyCam: Anything Can Represent Camera for Video Generation</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href="./static/css/anycam.css">
+
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script defer src="./static/js/results.js"></script>
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">
+            <span class="anycam">AnyCam</span>: Anything Can Represent Camera <br>for Video Generation
+          </h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://weijielyu.github.io/">Weijie Lyu</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://zhixinshu.github.io/">Zhixin Shu</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              Yuntian Ye<sup>3</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://faculty.ucmerced.edu/mhyang/">Ming-Hsuan Yang</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of California, Merced &nbsp;</span>
+            <span class="author-block"><sup>2</sup>Adobe Research &nbsp;</span>
+            <span class="author-block"><sup>3</sup>University of Pennsylvania</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- arXiv Link (add when the paper is on arXiv). -->
+              <!--
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/XXXX.XXXXX"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              -->
+              <!-- Video Link (add when the video is on YouTube). -->
+              <!--
+              <span class="link-block">
+                <a href="https://youtu.be/XXXXXXXXXXX"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-youtube"></i></span>
+                  <span>Video</span>
+                </a>
+              </span>
+              -->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/weijielyu/AnyCam_debug"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code (coming soon)</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <div class="clip-labels four">
+        <span>Input image</span><span class="ours">Anchor rendering</span><span class="ours">AnyCam</span><span>Camera trajectory</span>
+      </div>
+      <video class="lazy-video" data-src="teaser/kitchen" width="100%"></video>
+      <h2 class="subtitle has-text-centered teaser-sub">
+        From a single image, <span class="anycam">AnyCam</span> orbits 165 degrees around the bulldozer.
+        We <b class="hl">represent the camera with the rendering of an anchor object</b> in the scene:
+        the anchor is reconstructed in 3D and rendered along the target trajectory, a camera signal that is
+        <b class="hl">scale-aware</b>, <b class="hl">view-complete</b> and easy to specify relative to the object.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<!-- Abstract. -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Camera-controlled video generation re-renders a video along a target camera trajectory, yet moving
+            the camera around an object, the most natural way to change the viewpoint of an object-centric scene,
+            remains difficult. Existing methods condition either on camera parameters, which are scale-ambiguous
+            in monocular video, or on explicit geometry such as warped point clouds or depth, which breaks down
+            under large viewpoint changes. We present <i>AnyCam</i>, a method that represents the camera with an
+            anchor object in the scene: we reconstruct it in 3D and render it along the target trajectory, a camera
+            signal that is scale-aware, view-complete and easy to specify relative to the object. A video diffusion
+            model transfers the content and dynamics of the source video to the new viewpoint. Its H-Concat layout
+            aligns source and target frames in time, so the model can be distilled into <i>AnyCam-AR</i>, a
+            streaming few-step generator for on-the-fly camera control. Both models are trained on paired videos
+            with pixel-aligned anchor renderings from multi-camera videos and static-scene captures. Experiments on
+            diverse datasets and trajectories show that <i>AnyCam</i> performs favorably against camera-controlled
+            video generation and 3D reconstruction methods in camera control and visual quality.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Video (add the YouTube embed when the video is uploaded). -->
+<!--
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Video</h2>
+        <div class="publication-video">
+          <iframe src="https://www.youtube-nocookie.com/embed/XXXXXXXXXXX?rel=0"
+                  frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+-->
+
+<!-- Method. -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Method</h2>
+
+    <h3 class="title is-4 has-text-centered">How to Represent the Camera?</h3>
+    <div class="cam-rep">
+      <div class="columns is-vcentered">
+        <div class="column is-half"><video class="lazy-video" data-src="method/a_warp" width="100%"></video></div>
+        <div class="column is-half"><img src="./static/images/cam_rep_a.jpg" width="100%" alt="Camera parameters"></div>
+      </div>
+      <p><b>Camera parameters are scale-ambiguous.</b> A small object near the input camera and a large object
+        farther away give the same input image, but the same target camera sees them at a different size,
+        position and angle, so the target view is not determined.</p>
+
+      <div class="columns is-vcentered">
+        <div class="column is-half"><video class="lazy-video" data-src="method/b_orbit" width="100%"></video></div>
+        <div class="column is-half"><img src="./static/images/cam_rep_b.jpg" width="100%" alt="Explicit geometry"></div>
+      </div>
+      <p><b>Explicit geometry is incomplete and distorted.</b> A point cloud or depth warp of the input image only
+        covers the surface seen from the input camera. Under a large viewpoint change, the object breaks apart and
+        the rendering misleads the video generation.</p>
+
+      <div class="columns is-vcentered">
+        <div class="column is-half"><video class="lazy-video" data-src="method/c_orbit" width="100%"></video></div>
+        <div class="column is-half"><img src="./static/images/cam_rep_c.jpg" width="100%" alt="Our anchor rendering"></div>
+      </div>
+      <p><b>Our anchor rendering is scale-aware and view-complete.</b> It uses the complete reconstructed object,
+        so target cameras at any angle see the whole anchor with the correct size and pose.</p>
+    </div>
+
+    <h3 class="title is-4 has-text-centered">Overview</h3>
+    <img src="./static/images/method.jpg" width="100%" alt="AnyCam overview">
+    <div class="content has-text-justified">
+      <p>The user selects an anchor object in the source video. SAM 2 tracks it to give the source camera
+        representation (the anchor cut-out), and SAM 3D reconstructs it; the reconstruction is aligned to the source
+        cameras and rendered along the target trajectory to give the target camera representation. The noisy target
+        latent and the source latent are concatenated along the height (<b class="hl">H-Concat</b>), each half receives
+        its camera representation through channel concatenation, and the diffusion transformer denoises the target
+        half, which the VAE decodes into the target video. Because H-Concat aligns source and target frames in time,
+        the model is distilled into <i>AnyCam-AR</i>, a streaming few-step generator.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Results. -->
+<section class="section">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered">Results</h2>
+
+    <h3 class="title is-4 has-text-centered">Video-to-Video Camera Control</h3>
+    <div data-results="v2v"></div>
+
+    <h3 class="title is-4 has-text-centered">Single Image to Video</h3>
+    <div data-results="i2v"></div>
+
+    <h3 class="title is-4 has-text-centered">Long Videos (<i>AnyCam-AR</i>)</h3>
+    <div data-results="long"></div>
+
+    <h3 class="title is-4 has-text-centered">Any Object Can Be the Anchor</h3>
+    <p class="section-note">Control the camera with any object in the video.</p>
+    <div data-results="anchor"></div>
+
+    <h3 class="title is-4 has-text-centered">Switching the Anchor</h3>
+    <p class="section-note">What if the anchor leaves the view? We switch to another anchor and keep controlling the camera.</p>
+    <div data-results="switch"></div>
+
+    <h3 class="title is-4 has-text-centered">Interactive Demo (<i>AnyCam-AR</i>)</h3>
+    <p class="section-note">Select an object, reconstruct it with SAM 3D, then drag or scroll to move the camera;
+      <i>AnyCam-AR</i> streams the output (recorded on 4 GPUs at 11.2 FPS).</p>
+    <div data-results="demo"></div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{lyu2026anycam,
+  title   = {AnyCam: Anything Can Represent Camera for Video Generation},
+  author  = {Lyu, Weijie and Shu, Zhixin and Ye, Yuntian and Yang, Ming-Hsuan},
+  year    = {2026}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page is adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
