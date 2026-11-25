@@ -18,10 +18,12 @@ const RESULTS = {
   switch: [
     ["switch/cars", "When the silver car leaves the view, we switch to the red car and keep controlling the camera"],
     ["switch/chair-car", "When the chair leaves the view, we switch to the sports car and keep controlling the camera"],
+    ["switch/desk-chair", "We switch from the desk to the chair and keep controlling the camera, now orbiting the other way"],
+  ],
+  multi: [
     ["anchor/gaming", "Orbit the gaming chair, or push in toward the PC tower"],
     ["anchor/candle", "Orbit the armchair, or rise above the side table"],
     ["anchor/pinkb", "Orbit left around the telephone, or right around the perfume bottle"],
-    ["switch/desk-chair", "We switch from the desk to the chair and keep controlling the camera, now orbiting the other way"],
   ],
   demo: [
     ["demo/counter", "Counter (Mip-NeRF 360): select the oven mitt, then scroll to zoom in"],

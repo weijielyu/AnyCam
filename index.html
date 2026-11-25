@@ -171,33 +171,26 @@
     </div>
 
     <h3 class="title is-4 has-text-centered">Overview</h3>
-  </div>
-  <div class="container is-max-widescreen">
-    <div class="fig-pair">
-      <figure class="fig-a"><img src="./static/images/method.jpg" alt="AnyCam overview">
-        <figcaption>(a) Anchor-conditioned video-to-video generation.</figcaption></figure>
-      <figure class="fig-b"><img src="./static/images/concat_layouts.jpg" alt="Token layouts">
-        <figcaption>(b) Source and target token layouts.</figcaption></figure>
-    </div>
-  </div>
-  <div class="container is-max-desktop">
+    <img src="./static/images/method.jpg" width="100%" alt="AnyCam overview">
     <div class="content has-text-justified fig-text">
-      <p>(a) The user selects an anchor object in the source video. SAM 2 tracks it to give the source camera
+      <p>The user selects an anchor object in the source video. SAM 2 tracks it to give the source camera
         representation (the anchor cut-out), and SAM 3D reconstructs it; the reconstruction is aligned to the source
         cameras and rendered along the target trajectory to give the target camera representation. The noisy target
         latent and the source latent are concatenated along the height (H-Concat), each half receives its camera
         representation through channel concatenation, and the diffusion transformer denoises the target half, which
         the VAE decodes into the target video.</p>
-      <p>(b) Frame concatenation places the whole source after the target, so the first target frame needs the complete
-        source video and the generation cannot stream. H-Concat keeps the source and target as separate tokens at the
-        same temporal index and offsets the source in height, so the base model is used without new parameters or a
-        custom attention mask.</p>
     </div>
 
-    <h3 class="title is-4 has-text-centered">Streaming Generation: AnyCam-AR</h3>
+    <h3 class="title is-4 has-text-centered">H-Concat and Streaming Generation</h3>
     <div class="columns is-vcentered">
-      <div class="column is-6"><img src="./static/images/hconcat_stream.jpg" alt="Chunk-wise causal H-Concat"></div>
+      <div class="column is-6"><img src="./static/images/concat_layouts.jpg" alt="Source and target token layouts"></div>
       <div class="column is-6">
+        <div class="content has-text-justified">
+          <p>Frame concatenation places the whole source after the target, so the first target frame needs the complete
+            source video and the generation cannot stream. H-Concat keeps the source and target as separate tokens at the
+            same temporal index and offsets the source in height, so the base model is used without new parameters or a
+            custom attention mask. This makes AnyCam-AR possible:</p>
+        </div>
         <dl class="stats">
           <dt>Chunk-wise causal attention</dt><dd>each chunk carries its own source rows and anchor rendering</dd>
           <dt>Teacher forcing + DMD</dt><dd>few-step student distilled from the bidirectional model</dd>
@@ -228,10 +221,13 @@
     <h3 class="title is-4 has-text-centered">Long Videos (AnyCam-AR)</h3>
     <div data-results="long"></div>
 
-    <h3 class="title is-4 has-text-centered">Switching Anchors and Multiple Anchors</h3>
-    <p class="section-note">What if the anchor leaves the view? We switch to another anchor and keep controlling the camera.
-      We can also use several anchors in one video to control the camera.</p>
+    <h3 class="title is-4 has-text-centered">Switching the Anchor</h3>
+    <p class="section-note">What if the anchor leaves the view? We switch to another anchor and keep controlling the camera.</p>
     <div data-results="switch"></div>
+
+    <h3 class="title is-4 has-text-centered">Multiple Anchors</h3>
+    <p class="section-note">Different anchors in the same video give different handles on the camera.</p>
+    <div data-results="multi"></div>
 
     <h3 class="title is-4 has-text-centered">Interactive Demo (AnyCam-AR)</h3>
     <p class="section-note">Select an object, reconstruct it with SAM 3D, then drag or scroll to move the camera;
