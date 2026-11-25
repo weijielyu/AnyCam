@@ -185,21 +185,20 @@
       <div class="column is-6"><img src="./static/images/concat_layouts.jpg" alt="Source and target token layouts"></div>
       <div class="column is-6">
         <div class="content has-text-justified">
-          <p>Frame concatenation places the whole source after the target, so the first target frame needs the complete
-            source video and the generation cannot stream. H-Concat keeps the source and target as separate tokens at the
-            same temporal index and offsets the source in height, so the base model is used without new parameters or a
-            custom attention mask. This makes AnyCam-AR possible:</p>
+          <p>H-Concat stacks source and target frames along the height at the same temporal index, so the generation
+            can stream, without new parameters or attention masks.</p>
         </div>
         <dl class="stats">
           <dt>Chunk-wise causal attention</dt><dd>each chunk carries its own source rows and anchor rendering</dd>
           <dt>Teacher forcing + DMD</dt><dd>few-step student distilled from the bidirectional model</dd>
-          <dt>3.6 FPS</dt><dd>on 1 GPU, first chunk after 2.5 s</dd>
           <dt>11.2 FPS</dt><dd>on 4 GPUs, first chunk after 2.4 s</dd>
         </dl>
       </div>
     </div>
     </div>
 
+  </div>
+  <div class="container is-max-widescreen">
     <h3 class="title is-4 has-text-centered">The "<span class="rose">Any</span>" in AnyCam</h3>
     <p class="section-note">Any object in the scene can be the anchor. Picking a different anchor in the same video gives a
       different handle on the camera: here we push in on either camera, or pull back from the armchair.</p>
