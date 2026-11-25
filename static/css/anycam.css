@@ -55,3 +55,5 @@ dl.stats dd { color: #6B7280; margin-left: 0; }
 /* 11/25 user: titles too bold -> semi-bold, the page title medium */
 .title { font-weight: 600; }
 .publication-title { font-weight: 500; }
+/* 11/25 user: try aqua without bold in the teaser caption and abstract */
+.teaser-sub .hl, .teaser-sub .anycam, .abstract .hl, .abstract .anycam { font-weight: 400; }
