@@ -11,7 +11,7 @@
 <img alt="AnyCam teaser" src='media/teaser.jpg'>
 </div>
 
-> *AnyCam* represents the camera with the rendering of any object in the scene, a camera condition that is scale-aware, view-complete and object-relative, which enables object-centric camera control.
+> **AnyCam** represents the camera with the rendering of any object in the scene, a camera condition that is scale-aware, view-complete and object-relative, which enables object-centric camera control.
 
 ## 🚀 Code
 
