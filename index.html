@@ -96,8 +96,8 @@
       <img src="./static/images/teaser.jpg" width="100%" alt="AnyCam teaser">
       <h2 class="subtitle has-text-centered teaser-sub">
         <span class="anycam">AnyCam</span> moves the camera of a video relative to <b class="hl">any object</b> in the scene.
-        Given a source video (middle), the user picks an anchor object, here the food truck (A) or the chalkboard sign (B),
-        and a camera trajectory around it. We reconstruct the anchor in 3D and render it along the trajectory, and this
+        Given a source video (middle), the user picks an <b class="hl">anchor object</b>, here the food truck (A) or the chalkboard sign (B),
+        and a camera trajectory around it. We <b class="hl">reconstruct the anchor in 3D and render it along the trajectory</b>, and this
         rendering conditions the camera-controlled video generation. Orbiting the truck turns the view to its front (top row),
         and moving toward the sign brings its menu into view (bottom row), while the people and their motion follow the source video.
       </h2>
@@ -117,14 +117,14 @@
             the camera around an object, the most natural way to change the viewpoint of an object-centric scene,
             remains difficult. Existing methods condition either on camera parameters, which are scale-ambiguous
             in monocular video, or on explicit geometry such as warped point clouds or depth, which breaks down
-            under large viewpoint changes. We present <i>AnyCam</i>, a method that represents the camera with an
-            anchor object in the scene: we reconstruct it in 3D and render it along the target trajectory, a camera
-            signal that is scale-aware, view-complete and easy to specify relative to the object. A video diffusion
-            model transfers the content and dynamics of the source video to the new viewpoint. Its H-Concat layout
-            aligns source and target frames in time, so the model can be distilled into <i>AnyCam-AR</i>, a
-            streaming few-step generator for on-the-fly camera control. Both models are trained on paired videos
-            with pixel-aligned anchor renderings from multi-camera videos and static-scene captures. Experiments on
-            diverse datasets and trajectories show that <i>AnyCam</i> performs favorably against camera-controlled
+            under large viewpoint changes. We present AnyCam, a method that <b class="hl">represents the camera with an
+             anchor object</b> in the scene: we reconstruct it in 3D and render it along the target trajectory, a camera
+            signal that is <b class="hl">scale-aware</b>, <b class="hl">view-complete</b> and <b class="hl">easy to specify relative to the object</b>. A video diffusion
+            model transfers the content and dynamics of the source video to the new viewpoint. Its <b class="hl">H-Concat</b> layout
+            aligns source and target frames in time, so the model can be distilled into <b class="hl">AnyCam-AR</b>, a
+            <b class="hl">streaming few-step generator</b> for on-the-fly camera control. Both models are trained on paired videos
+            with <b class="hl">pixel-aligned anchor renderings</b> from multi-camera videos and static-scene captures. Experiments on
+            diverse datasets and trajectories show that AnyCam performs favorably against camera-controlled
             video generation and 3D reconstruction methods in camera control and visual quality.
           </p>
         </div>
@@ -167,7 +167,7 @@
         covers the surface seen from the input camera. Under a large viewpoint change, the object breaks apart and
         the rendering misleads the video generation.</p>
       <div class="hover-fig" data-src="method/c_orbit"><img src="./static/images/cam_rep_c.jpg" alt="Our anchor rendering"></div>
-      <p><b>Our anchor rendering is scale-aware and view-complete.</b> We reconstruct the anchor with SAM 3D, so target
+      <p><b>Our anchor rendering is <b class="hl">scale-aware</b> and <b class="hl">view-complete</b>.</b> We reconstruct the anchor with SAM 3D, so target
         cameras at any angle see the whole anchor with the correct size and pose.</p>
     </div>
 
@@ -178,7 +178,7 @@
       <li>SAM 2 tracks the anchor; its cut-out is the source camera representation.</li>
       <li>SAM 3D reconstructs the anchor and places it in the source camera.</li>
       <li>Rendering it along the target trajectory gives the target camera representation.</li>
-      <li>Both enter as channel conditions; source and target are stacked in height (H-Concat).</li>
+      <li>Both enter as channel conditions; source and target are stacked in height (<b class="hl">H-Concat</b>).</li>
       <li>The diffusion transformer denoises the target half; the VAE decodes the target video.</li>
     </ol>
 
@@ -186,15 +186,15 @@
     <div class="columns is-vcentered">
       <div class="column is-5"><img src="./static/images/concat_layouts.jpg" alt="Token layouts"></div>
       <div class="column is-7 content has-text-justified">
-        <p>We build <i>AnyCam</i> on Wan2.2-5B. Instead of concatenating source and target frames along time, which needs
-          the whole source before the first target frame, H-Concat stacks the noisy target and the clean source along the
+        <p>We build AnyCam on Wan2.2-5B. Instead of concatenating source and target frames along time, which needs
+          the whole source before the first target frame, <b class="hl">H-Concat</b> stacks the noisy target and the clean source along the
           height. With the 3D RoPE, the target token at frame <i>j</i> and row <i>h</i> has position (<i>j</i>, <i>h</i>)
           and the source token below it (<i>j</i>, <i>h</i> + <i>H</i>), so source and target frames of the same time step
-          share one temporal index. This adds no parameters and no attention mask, and it is what makes streaming possible.</p>
+          <b class="hl">share one temporal index</b>. This adds <b class="hl">no parameters and no attention mask</b>, and it is what makes streaming possible.</p>
       </div>
     </div>
 
-    <h3 class="title is-4 has-text-centered">Streaming Generation: <i>AnyCam-AR</i></h3>
+    <h3 class="title is-4 has-text-centered">Streaming Generation: AnyCam-AR</h3>
     <div class="columns is-vcentered">
       <div class="column is-6"><img src="./static/images/hconcat_stream.jpg" alt="Chunk-wise causal H-Concat"></div>
       <div class="column is-6">
@@ -211,7 +211,7 @@
     <video class="lazy-video" data-src="method/training" width="100%"></video>
     <p class="section-note">Training pairs come from synchronized multi-camera videos (7,810 MultiCamVideo pairs) and
       static-scene captures (5,217 DL3DV pairs). We reconstruct the anchor, align it to the dataset cameras and render it,
-      so the target condition is pixel-aligned with the target video.</p>
+      so the target condition is <b class="hl">pixel-aligned</b> with the target video.</p>
     <video class="lazy-video" data-src="method/alignment" width="100%"></video>
     <p class="section-note"><b>Anchor alignment.</b> Stage 1 searches one scale for the translation of all relative poses,
       maximizing the IoU between the rendered anchor and its SAM 2 masks over 20 views; stage 2 refines rotation,
@@ -230,7 +230,7 @@
     <h3 class="title is-4 has-text-centered">Video-to-Video Camera Control</h3>
     <div data-results="v2v"></div>
 
-    <h3 class="title is-4 has-text-centered">Long Videos (<i>AnyCam-AR</i>)</h3>
+    <h3 class="title is-4 has-text-centered">Long Videos (AnyCam-AR)</h3>
     <div data-results="long"></div>
 
     <h3 class="title is-4 has-text-centered">Any Object Can Be the Anchor</h3>
@@ -241,9 +241,9 @@
     <p class="section-note">What if the anchor leaves the view? We switch to another anchor and keep controlling the camera.</p>
     <div data-results="switch"></div>
 
-    <h3 class="title is-4 has-text-centered">Interactive Demo (<i>AnyCam-AR</i>)</h3>
+    <h3 class="title is-4 has-text-centered">Interactive Demo (AnyCam-AR)</h3>
     <p class="section-note">Select an object, reconstruct it with SAM 3D, then drag or scroll to move the camera;
-      <i>AnyCam-AR</i> streams the output (recorded on 4 GPUs at 11.2 FPS).</p>
+      AnyCam-AR streams the output (recorded on 4 GPUs at 11.2 FPS).</p>
     <div data-results="demo"></div>
   </div>
 </section>

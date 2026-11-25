@@ -1,6 +1,6 @@
 :root { --aqua: #1F8A7E; --rose: #B4475C; }
 body { background: #fff; color: #1D2330; }
-.anycam { color: var(--aqua); font-style: italic; }
+.anycam { color: var(--aqua); font-weight: 700; }
 .hl { color: var(--aqua); }
 .publication-authors a { color: var(--aqua) !important; }
 .teaser-sub { margin-top: 1rem; font-size: 1.1rem; line-height: 1.6; }
