@@ -52,3 +52,6 @@ dl.stats dd { color: #6B7280; margin-left: 0; }
 .rc-dots button { width: .6rem; height: .6rem; border-radius: 50%; border: none; margin: 0 .25rem; background: #ccc; cursor: pointer; padding: 0; }
 .rc-dots button.on { background: var(--aqua); }
 @media (max-width: 1100px) { .rc-prev { left: .2rem; } .rc-next { right: .2rem; } }
+/* 11/25 user: titles too bold -> semi-bold, the page title medium */
+.title { font-weight: 600; }
+.publication-title { font-weight: 500; }
