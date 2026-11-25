@@ -13,7 +13,10 @@ const RESULTS = {
     ["i2v/handbag", "Orbit around a handbag from a single photo, against 3D reconstruction methods"],
   ],
   long: [
-    ["long/cellphone", "333 frames around the phone and back"],
+    ["long/cellphone", "CO3D, 333 frames around the phone and back"],
+    ["long/keyboard", "CO3D, 333 frames around the keyboard and back"],
+    ["long/re10k-6771", "RealEstate10K, 165 frames from a single image: walk up to the front door"],
+    ["long/re10k-7c37", "RealEstate10K, 165 frames from a single image: fly over the house"],
   ],
   switch: [
     ["switch/cars", "When the silver car leaves the view, we switch to the red car and keep controlling the camera"],
