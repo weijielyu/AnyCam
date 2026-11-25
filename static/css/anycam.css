@@ -1,6 +1,6 @@
 :root { --aqua: #1F8A7E; --rose: #B4475C; }
 body { background: #fff; color: #1D2330; }
-.anycam { color: var(--aqua); font-weight: 800; }
+.anycam { color: var(--aqua); font-weight: 700; }
 .hl { color: var(--aqua); }
 .publication-authors a { color: var(--aqua) !important; }
 .teaser-sub { margin-top: 1rem; font-size: 1.1rem; line-height: 1.6; }
@@ -30,3 +30,25 @@ ol.steps li { margin-bottom: 0.3rem; }
 dl.stats dt { color: var(--aqua); font-weight: 700; font-size: 1.1rem; margin-top: 0.6rem; }
 dl.stats dd { color: #6B7280; margin-left: 0; }
 @media (max-width: 768px) { .fig-md { width: 100%; } }
+
+.fig-pair { display: flex; gap: 1.5%; align-items: flex-start; margin: 0 auto 0.5rem; }
+.fig-pair figure { margin: 0; text-align: center; }
+.fig-pair .fig-a { width: 69.2%; } .fig-pair .fig-b { width: 29.3%; }
+.fig-pair img { width: 100%; display: block; }
+.fig-pair figcaption { color: #6B7280; font-size: 0.9rem; margin-top: 0.3rem; }
+.fig-text { margin-top: 1rem; }
+@media (max-width: 768px) { .fig-pair { flex-direction: column; } .fig-pair .fig-a, .fig-pair .fig-b { width: 100%; } }
+/* horizontal result carousels */
+.rc { position: relative; margin-bottom: 2.5rem; }
+.rc-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; gap: 1rem;
+  scrollbar-width: none; }
+.rc-track::-webkit-scrollbar { display: none; }
+.rc-track .result-item { flex: 0 0 100%; scroll-snap-align: center; margin-bottom: 0; }
+.rc-btn { position: absolute; top: 40%; transform: translateY(-50%); z-index: 2; width: 2.6rem; height: 2.6rem;
+  border-radius: 50%; border: none; background: rgba(29,35,48,.55); color: #fff; font-size: 1.3rem; cursor: pointer; }
+.rc-btn:hover { background: rgba(31,138,126,.9); }
+.rc-prev { left: -1.3rem; } .rc-next { right: -1.3rem; }
+.rc-dots { text-align: center; margin-top: 0.4rem; }
+.rc-dots button { width: .6rem; height: .6rem; border-radius: 50%; border: none; margin: 0 .25rem; background: #ccc; cursor: pointer; padding: 0; }
+.rc-dots button.on { background: var(--aqua); }
+@media (max-width: 1100px) { .rc-prev { left: .2rem; } .rc-next { right: .2rem; } }

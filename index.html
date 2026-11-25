@@ -11,8 +11,7 @@
         rel="stylesheet">
 
   <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <!-- academicons (for the arXiv button): https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css -->
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="stylesheet" href="./static/css/anycam.css">
 
@@ -171,25 +170,28 @@
         cameras at any angle see the whole anchor with the correct size and pose.</p>
     </div>
 
-    <h3 class="title is-4 has-text-centered">AnyCam: the Anchor Rendering Represents the Camera</h3>
-    <img class="fig-md" src="./static/images/method.jpg" alt="AnyCam overview">
-    <ol class="steps">
-      <li>Select an anchor object in the source video.</li>
-      <li>SAM 2 tracks the anchor; its cut-out is the source camera representation.</li>
-      <li>SAM 3D reconstructs the anchor and places it in the source camera.</li>
-      <li>Rendering it along the target trajectory gives the target camera representation.</li>
-      <li>Both enter as channel conditions; source and target are stacked in height (H-Concat).</li>
-      <li>The diffusion transformer denoises the target half; the VAE decodes the target video.</li>
-    </ol>
-
-    <h3 class="title is-4 has-text-centered">H-Concat: Time-Synchronized Concatenation</h3>
-    <div class="columns is-vcentered">
-      <div class="column is-5"><img src="./static/images/concat_layouts.jpg" alt="Token layouts"></div>
-      <div class="column is-7 content has-text-justified">
-        <p>Instead of concatenating source and target frames along time, H-Concat stacks the noisy target and the
-          clean source along the height, so source and target frames of the same time step share one temporal index.
-          It adds no parameters or attention mask, and makes streaming possible.</p>
-      </div>
+    <h3 class="title is-4 has-text-centered">Overview</h3>
+  </div>
+  <div class="container is-max-widescreen">
+    <div class="fig-pair">
+      <figure class="fig-a"><img src="./static/images/method.jpg" alt="AnyCam overview">
+        <figcaption>(a) Anchor-conditioned video-to-video generation.</figcaption></figure>
+      <figure class="fig-b"><img src="./static/images/concat_layouts.jpg" alt="Token layouts">
+        <figcaption>(b) Source and target token layouts.</figcaption></figure>
+    </div>
+  </div>
+  <div class="container is-max-desktop">
+    <div class="content has-text-justified fig-text">
+      <p>(a) The user selects an anchor object in the source video. SAM 2 tracks it to give the source camera
+        representation (the anchor cut-out), and SAM 3D reconstructs it; the reconstruction is aligned to the source
+        cameras and rendered along the target trajectory to give the target camera representation. The noisy target
+        latent and the source latent are concatenated along the height (H-Concat), each half receives its camera
+        representation through channel concatenation, and the diffusion transformer denoises the target half, which
+        the VAE decodes into the target video.</p>
+      <p>(b) Frame concatenation places the whole source after the target, so the first target frame needs the complete
+        source video and the generation cannot stream. H-Concat keeps the source and target as separate tokens at the
+        same temporal index and offsets the source in height, so the base model is used without new parameters or a
+        custom attention mask.</p>
     </div>
 
     <h3 class="title is-4 has-text-centered">Streaming Generation: AnyCam-AR</h3>

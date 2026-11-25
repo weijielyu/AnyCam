@@ -39,7 +39,10 @@ function makeVideo(key) {
 }
 
 document.querySelectorAll("[data-results]").forEach(box => {
-  (RESULTS[box.dataset.results] || []).forEach(([key, cap]) => {
+  const items = RESULTS[box.dataset.results] || [];
+  const track = document.createElement("div");
+  track.className = "rc-track";
+  items.forEach(([key, cap]) => {
     const item = document.createElement("div");
     item.className = "result-item";
     item.appendChild(makeVideo(key));
@@ -47,8 +50,26 @@ document.querySelectorAll("[data-results]").forEach(box => {
     p.className = "result-caption";
     p.textContent = cap;
     item.appendChild(p);
-    box.appendChild(item);
+    track.appendChild(item);
   });
+  box.classList.add("rc");
+  box.appendChild(track);
+  if (items.length < 2) return;
+  // left / right buttons and dots; the track also scrolls by swipe or trackpad
+  const go = i => track.scrollTo({ left: i * track.clientWidth, behavior: "smooth" });
+  const cur = () => Math.round(track.scrollLeft / track.clientWidth);
+  const prev = document.createElement("button"), next = document.createElement("button");
+  prev.className = "rc-btn rc-prev"; prev.textContent = "\u2039"; prev.setAttribute("aria-label", "Previous");
+  next.className = "rc-btn rc-next"; next.textContent = "\u203A"; next.setAttribute("aria-label", "Next");
+  prev.onclick = () => go((cur() - 1 + items.length) % items.length);
+  next.onclick = () => go((cur() + 1) % items.length);
+  box.appendChild(prev); box.appendChild(next);
+  const dots = document.createElement("div");
+  dots.className = "rc-dots";
+  items.forEach((_, i) => { const d = document.createElement("button"); d.setAttribute("aria-label", "Example " + (i + 1)); d.onclick = () => go(i); dots.appendChild(d); });
+  box.appendChild(dots);
+  const mark = () => dots.querySelectorAll("button").forEach((d, i) => d.classList.toggle("on", i === cur()));
+  track.addEventListener("scroll", () => requestAnimationFrame(mark)); mark();
 });
 
 // src is set from JS; load when near the viewport, pause when off screen (mobile-friendly).
@@ -66,7 +87,7 @@ function load(v) {
 if ("IntersectionObserver" in window) {
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) load(e.target); else if (e.target.dataset.loaded) e.target.pause(); });
-  }, { rootMargin: "300px 0px" });
+  }, { rootMargin: "300px 0px", threshold: 0.3 });
   videos.forEach(v => io.observe(v));
 } else {
   videos.forEach(load);
