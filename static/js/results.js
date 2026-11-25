@@ -74,3 +74,20 @@ if ("IntersectionObserver" in window) {
 } else {
   videos.forEach(load);
 }
+
+// Method figures: show the still by default, play the matching animation on hover (tap on touch screens).
+document.querySelectorAll(".hover-fig").forEach(box => {
+  const v = document.createElement("video");
+  v.muted = true; v.playsInline = true; v.loop = true; v.preload = "none";
+  v.setAttribute("muted", ""); v.setAttribute("playsinline", "");
+  box.appendChild(v);
+  const show = () => {
+    if (!v.src) v.src = BASE + box.dataset.src + ".mp4";
+    v.currentTime = 0; box.classList.add("playing");
+    const p = v.play(); if (p && p.catch) p.catch(() => {});
+  };
+  const hide = () => { box.classList.remove("playing"); v.pause(); };
+  box.addEventListener("mouseenter", show);
+  box.addEventListener("mouseleave", hide);
+  box.addEventListener("click", () => (box.classList.contains("playing") ? hide() : show()));
+});

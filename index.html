@@ -93,15 +93,13 @@
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
-      <div class="clip-labels four">
-        <span>Input image</span><span class="ours">Anchor rendering</span><span class="ours">AnyCam</span><span>Camera trajectory</span>
-      </div>
-      <video class="lazy-video" data-src="teaser/kitchen" width="100%"></video>
+      <img src="./static/images/teaser.jpg" width="100%" alt="AnyCam teaser">
       <h2 class="subtitle has-text-centered teaser-sub">
-        From a single image, <span class="anycam">AnyCam</span> orbits 165 degrees around the bulldozer.
-        We <b class="hl">represent the camera with the rendering of an anchor object</b> in the scene:
-        the anchor is reconstructed in 3D and rendered along the target trajectory, a camera signal that is
-        <b class="hl">scale-aware</b>, <b class="hl">view-complete</b> and easy to specify relative to the object.
+        <span class="anycam">AnyCam</span> moves the camera of a video relative to <b class="hl">any object</b> in the scene.
+        Given a source video (middle), the user picks an anchor object, here the food truck (A) or the chalkboard sign (B),
+        and a camera trajectory around it. We reconstruct the anchor in 3D and render it along the trajectory, and this
+        rendering conditions the camera-controlled video generation. Orbiting the truck turns the view to its front (top row),
+        and moving toward the sign brings its menu into view (bottom row), while the people and their motion follow the source video.
       </h2>
     </div>
   </div>
@@ -158,42 +156,66 @@
     <h2 class="title is-3 has-text-centered">Method</h2>
 
     <h3 class="title is-4 has-text-centered">How to Represent the Camera?</h3>
+    <p class="section-note">Hover over (or tap) a figure to play its animation.</p>
     <div class="cam-rep">
-      <div class="columns is-vcentered">
-        <div class="column is-half"><video class="lazy-video" data-src="method/a_warp" width="100%"></video></div>
-        <div class="column is-half"><img src="./static/images/cam_rep_a.jpg" width="100%" alt="Camera parameters"></div>
-      </div>
+      <div class="hover-fig" data-src="method/a_warp"><img src="./static/images/cam_rep_a.jpg" alt="Camera parameters"></div>
       <p><b>Camera parameters are scale-ambiguous.</b> A small object near the input camera and a large object
         farther away give the same input image, but the same target camera sees them at a different size,
         position and angle, so the target view is not determined.</p>
-
-      <div class="columns is-vcentered">
-        <div class="column is-half"><video class="lazy-video" data-src="method/b_orbit" width="100%"></video></div>
-        <div class="column is-half"><img src="./static/images/cam_rep_b.jpg" width="100%" alt="Explicit geometry"></div>
-      </div>
+      <div class="hover-fig" data-src="method/b_orbit"><img src="./static/images/cam_rep_b.jpg" alt="Explicit geometry"></div>
       <p><b>Explicit geometry is incomplete and distorted.</b> A point cloud or depth warp of the input image only
         covers the surface seen from the input camera. Under a large viewpoint change, the object breaks apart and
         the rendering misleads the video generation.</p>
+      <div class="hover-fig" data-src="method/c_orbit"><img src="./static/images/cam_rep_c.jpg" alt="Our anchor rendering"></div>
+      <p><b>Our anchor rendering is scale-aware and view-complete.</b> We reconstruct the anchor with SAM 3D, so target
+        cameras at any angle see the whole anchor with the correct size and pose.</p>
+    </div>
 
-      <div class="columns is-vcentered">
-        <div class="column is-half"><video class="lazy-video" data-src="method/c_orbit" width="100%"></video></div>
-        <div class="column is-half"><img src="./static/images/cam_rep_c.jpg" width="100%" alt="Our anchor rendering"></div>
+    <h3 class="title is-4 has-text-centered">AnyCam: the Anchor Rendering Represents the Camera</h3>
+    <img class="fig-md" src="./static/images/method.jpg" alt="AnyCam overview">
+    <ol class="steps">
+      <li>Select an anchor object in the source video.</li>
+      <li>SAM 2 tracks the anchor; its cut-out is the source camera representation.</li>
+      <li>SAM 3D reconstructs the anchor and places it in the source camera.</li>
+      <li>Rendering it along the target trajectory gives the target camera representation.</li>
+      <li>Both enter as channel conditions; source and target are stacked in height (H-Concat).</li>
+      <li>The diffusion transformer denoises the target half; the VAE decodes the target video.</li>
+    </ol>
+
+    <h3 class="title is-4 has-text-centered">H-Concat: Time-Synchronized Concatenation</h3>
+    <div class="columns is-vcentered">
+      <div class="column is-5"><img src="./static/images/concat_layouts.jpg" alt="Token layouts"></div>
+      <div class="column is-7 content has-text-justified">
+        <p>We build <i>AnyCam</i> on Wan2.2-5B. Instead of concatenating source and target frames along time, which needs
+          the whole source before the first target frame, H-Concat stacks the noisy target and the clean source along the
+          height. With the 3D RoPE, the target token at frame <i>j</i> and row <i>h</i> has position (<i>j</i>, <i>h</i>)
+          and the source token below it (<i>j</i>, <i>h</i> + <i>H</i>), so source and target frames of the same time step
+          share one temporal index. This adds no parameters and no attention mask, and it is what makes streaming possible.</p>
       </div>
-      <p><b>Our anchor rendering is scale-aware and view-complete.</b> It uses the complete reconstructed object,
-        so target cameras at any angle see the whole anchor with the correct size and pose.</p>
     </div>
 
-    <h3 class="title is-4 has-text-centered">Overview</h3>
-    <img src="./static/images/method.jpg" width="100%" alt="AnyCam overview">
-    <div class="content has-text-justified">
-      <p>The user selects an anchor object in the source video. SAM 2 tracks it to give the source camera
-        representation (the anchor cut-out), and SAM 3D reconstructs it; the reconstruction is aligned to the source
-        cameras and rendered along the target trajectory to give the target camera representation. The noisy target
-        latent and the source latent are concatenated along the height (<b class="hl">H-Concat</b>), each half receives
-        its camera representation through channel concatenation, and the diffusion transformer denoises the target
-        half, which the VAE decodes into the target video. Because H-Concat aligns source and target frames in time,
-        the model is distilled into <i>AnyCam-AR</i>, a streaming few-step generator.</p>
+    <h3 class="title is-4 has-text-centered">Streaming Generation: <i>AnyCam-AR</i></h3>
+    <div class="columns is-vcentered">
+      <div class="column is-6"><img src="./static/images/hconcat_stream.jpg" alt="Chunk-wise causal H-Concat"></div>
+      <div class="column is-6">
+        <dl class="stats">
+          <dt>Chunk-wise causal attention</dt><dd>each chunk carries its own source rows and anchor rendering</dd>
+          <dt>Teacher forcing + DMD</dt><dd>few-step student distilled from the bidirectional model</dd>
+          <dt>3.6 FPS</dt><dd>on 1 GPU, first chunk after 2.5 s</dd>
+          <dt>11.2 FPS</dt><dd>on 4 GPUs, first chunk after 2.4 s</dd>
+        </dl>
+      </div>
     </div>
+
+    <h3 class="title is-4 has-text-centered">Training Data</h3>
+    <video class="lazy-video" data-src="method/training" width="100%"></video>
+    <p class="section-note">Training pairs come from synchronized multi-camera videos (7,810 MultiCamVideo pairs) and
+      static-scene captures (5,217 DL3DV pairs). We reconstruct the anchor, align it to the dataset cameras and render it,
+      so the target condition is pixel-aligned with the target video.</p>
+    <video class="lazy-video" data-src="method/alignment" width="100%"></video>
+    <p class="section-note"><b>Anchor alignment.</b> Stage 1 searches one scale for the translation of all relative poses,
+      maximizing the IoU between the rendered anchor and its SAM 2 masks over 20 views; stage 2 refines rotation,
+      translation and scale on the blurred difference between the rendered opacity and the masks.</p>
   </div>
 </section>
 
@@ -202,11 +224,11 @@
   <div class="container is-max-widescreen">
     <h2 class="title is-3 has-text-centered">Results</h2>
 
-    <h3 class="title is-4 has-text-centered">Video-to-Video Camera Control</h3>
-    <div data-results="v2v"></div>
-
     <h3 class="title is-4 has-text-centered">Single Image to Video</h3>
     <div data-results="i2v"></div>
+
+    <h3 class="title is-4 has-text-centered">Video-to-Video Camera Control</h3>
+    <div data-results="v2v"></div>
 
     <h3 class="title is-4 has-text-centered">Long Videos (<i>AnyCam-AR</i>)</h3>
     <div data-results="long"></div>
