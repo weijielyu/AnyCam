@@ -167,6 +167,7 @@
     </div>
 
     <h3 class="title is-4 has-text-centered">Overview</h3>
+    <div class="narrow">
     <img src="./static/images/method.jpg" width="100%" alt="AnyCam overview">
     <div class="content has-text-justified fig-text">
       <p>The user selects an anchor object in the source video. SAM 2 tracks it to give the source camera
@@ -176,8 +177,10 @@
         representation through channel concatenation, and the diffusion transformer denoises the target half, which
         the VAE decodes into the target video.</p>
     </div>
+    </div>
 
     <h3 class="title is-4 has-text-centered">H-Concat and Streaming Generation</h3>
+    <div class="narrow">
     <div class="columns is-vcentered">
       <div class="column is-6"><img src="./static/images/concat_layouts.jpg" alt="Source and target token layouts"></div>
       <div class="column is-6">
@@ -194,6 +197,7 @@
           <dt>11.2 FPS</dt><dd>on 4 GPUs, first chunk after 2.4 s</dd>
         </dl>
       </div>
+    </div>
     </div>
 
     <h3 class="title is-4 has-text-centered">The "Any" in AnyCam</h3>

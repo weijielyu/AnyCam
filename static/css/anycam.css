@@ -57,3 +57,6 @@ dl.stats dd { color: #6B7280; margin-left: 0; }
 .publication-title { font-weight: 500; }
 /* 11/25 user: try aqua without bold in the teaser caption and abstract */
 .teaser-sub .hl, .teaser-sub .anycam, .abstract .hl, .abstract .anycam { font-weight: 400; }
+/* 11/25 user: overview and H-Concat at the abstract width (Bulma column is-four-fifths = 80% of the 960 px container) */
+.narrow { max-width: 80%; margin: 0 auto; }
+@media (max-width: 768px) { .narrow { max-width: 100%; } }
