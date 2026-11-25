@@ -21,6 +21,7 @@ const RESULTS = {
     ["switch/desk-chair", "We switch from the desk to the chair and keep controlling the camera, now orbiting the other way"],
   ],
   multi: [
+    ["anchor/camera", "Push in on either camera, or pull back from the armchair"],
     ["anchor/gaming", "Orbit the gaming chair, or push in toward the PC tower"],
     ["anchor/candle", "Orbit the armchair, or rise above the side table"],
     ["anchor/pinkb", "Orbit left around the telephone, or right around the perfume bottle"],
