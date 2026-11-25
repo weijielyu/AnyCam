@@ -60,3 +60,5 @@ dl.stats dd { color: #6B7280; margin-left: 0; }
 /* 11/25 user: overview and H-Concat at the abstract width (Bulma column is-four-fifths = 80% of the 960 px container) */
 .narrow { max-width: 80%; margin: 0 auto; }
 @media (max-width: 768px) { .narrow { max-width: 100%; } }
+/* 11/25 user: rose for the "any object / anchor" idea (as in the talk's "Anything"), aqua for AnyCam and its properties */
+.rose, .hl.rose { color: var(--rose); }

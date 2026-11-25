@@ -27,7 +27,7 @@
       <div class="columns is-centered">
         <div class="column has-text-centered">
           <h1 class="title is-2 publication-title">
-            <span class="anycam">AnyCam</span>: Anything Can Represent Camera <br>for Video Generation
+            <span class="anycam">AnyCam</span>: <span class="rose">Anything</span> Can Represent Camera <br>for Video Generation
           </h1>
 
           <div class="is-size-5 publication-authors">
@@ -92,8 +92,8 @@
     <div class="hero-body">
       <img src="./static/images/teaser.jpg" width="100%" alt="AnyCam teaser">
       <h2 class="subtitle has-text-centered teaser-sub">
-        <b class="anycam">AnyCam</b> moves the camera of a video relative to <b class="hl">any object</b> in the scene.
-        Given a source video (middle), the user picks an <b class="hl">anchor object</b>, here the food truck (A) or the chalkboard sign (B),
+        <b class="anycam">AnyCam</b> moves the camera of a video relative to <b class="hl rose">any object</b> in the scene.
+        Given a source video (middle), the user picks an <b class="hl rose">anchor object</b>, here the food truck (A) or the chalkboard sign (B),
         and a camera trajectory around it. We reconstruct the anchor in 3D and render it along the trajectory, and this
         rendering conditions the camera-controlled video generation. Orbiting the truck turns the view to its front (top row),
         and moving toward the sign brings its menu into view (bottom row), while the people and their motion follow the source video.
@@ -114,7 +114,7 @@
             the camera around an object, the most natural way to change the viewpoint of an object-centric scene,
             remains difficult. Existing methods condition either on camera parameters, which are scale-ambiguous
             in monocular video, or on explicit geometry such as warped point clouds or depth, which breaks down
-            under large viewpoint changes. We present <b class="anycam">AnyCam</b>, a method that <b class="hl">represents the camera with an
+            under large viewpoint changes. We present <b class="anycam">AnyCam</b>, a method that <b class="hl rose">represents the camera with an
              anchor object</b> in the scene: we reconstruct it in 3D and render it along the target trajectory, a camera
             signal that is <b class="hl">scale-aware</b>, <b class="hl">view-complete</b> and <b class="hl">easy to specify relative to the object</b>. A video diffusion
             model transfers the content and dynamics of the source video to the new viewpoint. Its <b class="hl">H-Concat</b> layout
@@ -200,7 +200,7 @@
     </div>
     </div>
 
-    <h3 class="title is-4 has-text-centered">The "Any" in AnyCam</h3>
+    <h3 class="title is-4 has-text-centered">The "<span class="rose">Any</span>" in AnyCam</h3>
     <p class="section-note">Any object in the scene can be the anchor. Picking a different anchor in the same video gives a
       different handle on the camera: here we push in on either camera, or pull back from the armchair.</p>
     <video class="lazy-video" data-src="anchor/camera" width="100%"></video>
