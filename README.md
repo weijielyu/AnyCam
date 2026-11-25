@@ -5,7 +5,7 @@
 
 [![Website](https://img.shields.io/badge/Website-AnyCam?logo=googlechrome&logoColor=hsl(204%2C%2086%25%2C%2053%25)&label=AnyCam&labelColor=%23f5f5dc&color=hsl(204%2C%2086%25%2C%2053%25))](https://weijielyu.github.io/AnyCam_debug)
 <!-- [![Paper](https://img.shields.io/badge/Paper-arXiv?logo=arxiv&logoColor=%23B31B1B&label=arXiv&labelColor=%23f5f5dc&color=%23B31B1B)](https://arxiv.org/abs/XXXX.XXXXX) -->
-<!-- [![Video](https://img.shields.io/badge/Video-YouTube?logo=youtube&logoColor=%23FF0000&label=YouTube&labelColor=%23f5f5dc&color=%23FF0000)](https://youtu.be/XXXXXXXXXXX) -->
+[![Video](https://img.shields.io/badge/Video-YouTube?logo=youtube&logoColor=%23FF0000&label=YouTube&labelColor=%23f5f5dc&color=%23FF0000)](https://youtu.be/vWr0S4sPfqw)
 
 <div align='center'>
 <img alt="AnyCam teaser" src='media/teaser.jpg'>
